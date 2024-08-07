@@ -1,19 +1,23 @@
 const express = require('express');
-const pool = require('./config/db'); // Assuming db.js is in the same directory
+const bodyParser = require('body-parser');
+const userRoutes = require('./routes/authRoutes');
+const taskRoutes = require('./routes/taskRoutes');
+const sequelize = require('./config/dbConfig');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.get('/users', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM users');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Routes
+app.use('/api/users', userRoutes);
+app.use('/api/tasks', taskRoutes);
+
+// Sync database
+sequelize.sync().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 });
