@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 
 const LoginPage = () => {
@@ -11,11 +11,10 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/login', { username, password });
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token); // Store token in local storage
-        navigate('/dashboard');
-      }
+      const response = await axios.post('/auth/login', { username, password });
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+      navigate('/');
     } catch (err) {
       setError('Invalid credentials');
     }
@@ -51,9 +50,6 @@ const LoginPage = () => {
             Login
           </button>
         </form>
-        <p className="text-center text-sm text-gray-600 mt-4">
-          Don't have an account? <Link to="/signup" className="text-indigo-600 hover:text-indigo-800">Sign Up</Link>
-        </p>
       </div>
     </div>
   );

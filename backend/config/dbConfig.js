@@ -1,8 +1,10 @@
-const { Sequelize } = require('sequelize');
-
-const sequelize = new Sequelize('taskapp', 'postgres', 'paramesh', {
+const { Pool } = require('pg');
+const pool = new Pool({
+  user: 'postgres',
   host: 'localhost',
-  dialect: 'postgres',
+  database: 'taskApp',
+  password: 'paramesh',
+  port: 5432,
 });
 
-module.exports = sequelize;
+module.exports = pool;
