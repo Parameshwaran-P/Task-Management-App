@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../db');
+const pool = require('../config/dbConfig');
 
 // Get all tasks
 router.get('/tasks', async (req, res) => {
