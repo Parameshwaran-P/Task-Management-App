@@ -12,5 +12,5 @@ const syncDatabase = async () => {
 
 module.exports = {
   User,
-  syncDatabase
+  syncDatabase,
 };
