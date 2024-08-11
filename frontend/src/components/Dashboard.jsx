@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../api/axios'; // Ensure this is correctly configured
+import axios from '../api/axios'; // Assuming this is your configured Axios instance
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -7,10 +7,9 @@ const Dashboard = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Fetch tasks on component mount
     const fetchTasks = async () => {
       try {
-        const response = await axios.get('/tasks');
+        const response = await axios.get('/tasks'); // Correct API path
         setTasks(response.data);
       } catch (err) {
         console.error('Error fetching tasks:', err);
@@ -24,7 +23,7 @@ const Dashboard = () => {
   const handleAddTask = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/tasks', { task: newTask });
+      const response = await axios.post('/tasks', { task: newTask }); // Correct API path
       setTasks([...tasks, response.data]);
       setNewTask('');
     } catch (err) {
@@ -45,7 +44,9 @@ const Dashboard = () => {
           className="px-3 py-2 border rounded"
           placeholder="Add a new task"
         />
-        <button type="submit" className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">Add Task</button>
+        <button type="submit" className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">
+          Add Task
+        </button>
       </form>
       <ul>
         {tasks.map((task) => (
